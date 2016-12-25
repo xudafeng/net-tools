@@ -1,0 +1,81 @@
+#!/usr/bin/env node
+/* ================================================================
+ * net-tools by xdf(xudafeng[at]126.com)
+ *
+ * first created at : Sat Dec 24 2016 16:40:36 GMT+0800 (CST)
+ *
+ * ================================================================
+ * Copyright 2013 xdf
+ *
+ * Licensed under the MIT License
+ * You may not use this file except in compliance with the License.
+ *
+ * ================================================================ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const EOL = require('os').EOL;
+const chalk = require('chalk');
+const program = require('commander');
+const spawn = require('child_process').spawn;
+
+const pkg = require('../package.json');
+
+program
+  .option('-v, --versions',    'output version infomation')
+  .usage('<command> [options] [arguments]')
+  .helpInformation = function() {
+    return [
+      '',
+      '  ' + chalk.white(pkg.description),
+      '',
+      '  Usage:',
+      '    ' + this._name + ' ' + this.usage(),
+      '',
+      '  Commands:',
+      '    server          reliable server',
+      '    adduser         add one user',
+      '',
+      '  Options:',
+      '' + this.optionHelp().replace(/^/gm, '    '),
+      '',
+      '  Further help:',
+      '',
+      '  ' + chalk.white(pkg.homepage),
+      '',
+      ''
+    ].join(EOL);
+  };
+
+program.parse(process.argv);
+
+if (program.versions) {
+  console.info(`${EOL}  ${chalk.white(pkg.version)}${EOL}`);
+  process.exit(0);
+}
+
+const cmd = program.args[0];
+
+if (!cmd) {
+  return program.help();
+}
+
+const file = path.join(__dirname, `${pkg.name}-${cmd}`);
+
+if (!fs.existsSync(file)) {
+  console.log('%s  command `%s` not found', EOL, chalk.yellow(cmd));
+  return program.help();
+}
+
+let args = program.rawArgs.slice(3);
+args.unshift(file);
+
+const bootstrap = spawn('node', args, {
+  stdio: [process.stdin, process.stdout, 2, 'ipc']
+});
+
+bootstrap.on('close', (code) => {
+  process.exit(`process exited with code ${code}`);
+});

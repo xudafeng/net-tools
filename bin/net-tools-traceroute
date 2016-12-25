@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+/* ================================================================
+ * net-tools by xdf(xudafeng[at]126.com)
+ *
+ * first created at : Sat Dec 24 2016 16:40:36 GMT+0800 (CST)
+ *
+ * ================================================================
+ * Copyright 2013 xdf
+ *
+ * Licensed under the MIT License
+ * You may not use this file except in compliance with the License.
+ *
+ * ================================================================ */
+
+'use strict';
+
+const EOL = require('os').EOL;
+const chalk = require('chalk');
+const program = require('commander');
+
+const traceroute = require('../lib/traceroute');
+
+program
+  .parse(process.argv);
+
+traceroute(program.args)
