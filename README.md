@@ -21,13 +21,13 @@
 
 ## Installment
 
-```shell
+```bash
 $ npm i net-tools --save-dev
 ```
 
 ## Usage
 
-```shell
+```bash
 $ net-tools traceroute github.com
 $ net-tools httproute www.github.com
 ```
