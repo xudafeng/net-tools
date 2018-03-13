@@ -22,7 +22,7 @@
 ## Installment
 
 ```bash
-$ npm i net-tools --save-dev
+$ npm i net-tools -g
 ```
 
 ## Usage
@@ -42,5 +42,3 @@ $ net-tools httproute www.github.com
 ## License
 
 The MIT License (MIT)
-
-Copyright (c) 2015 xdf

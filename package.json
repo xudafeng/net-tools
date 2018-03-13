@@ -1,9 +1,9 @@
 {
   "name": "net-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "net tools",
   "keywords": [
-    "net-tools"
+    "net"
   ],
   "bin": {
     "net-tools": "./bin/net-tools"
@@ -14,7 +14,6 @@
     "url": "git://github.com/xudafeng/net-tools.git"
   },
   "dependencies": {
-    "chalk": "^1.1.3",
     "co": "^4.6.0",
     "commander": "^2.9.0",
     "cookie-manager": "^0.0.16",
@@ -28,19 +27,14 @@
     "istanbul": "*",
     "jshint": "*",
     "mocha": "*",
-    "pre-commit": "1.1.1",
-    "should": "*"
+    "pre-commit": "^1.2.2"
   },
   "scripts": {
-    "test": "make test",
-    "jshint": "make jshint"
+    "test": "instanbul cover `npm bin`/_mocha",
+    "lint": "jshint .",
+    "ci": "npm run lint && npm run test"
   },
   "pre-commit": [
-    "jshint"
   ],
-  "homepage": "https://github.com/xudafeng/net-tools",
-  "author": "xudafeng",
-  "email": "xudafeng@126.com",
-  "blog": "http://xdf.me",
   "license": "MIT"
 }
